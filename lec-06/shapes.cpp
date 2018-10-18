@@ -12,6 +12,7 @@ void drawTriangle(int width){//Definition
         }
         cout<<endl;
     }
+	cout<<"Some change";
 }
 string drawTriangleR(int width){//Definition
     //Code to draw a right triangle

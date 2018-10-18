@@ -2,8 +2,14 @@
 # This is a comment
 
 #target: dependencies 
-shapes: shapes.cpp
-	g++ shapes.cpp -o shapes
+test_shapes: shapes.o test_shapes.o
+	g++ shapes.o test_shapes.o -o test_shapes
+
+shapes.o: shapes.cpp
+	g++ -c shapes.cpp
+
+test_shapes.o: test_shapes.cpp
+	g++ -c test_shapes.cpp
 
 clean:
-	rm shapes
+	rm test_shapes *.o
