@@ -20,32 +20,65 @@ Node* createSmallLinkedListWrongImplementation(int x, int y){
 	return head;
 
 }
-Node* createSmallLinkedList(int x, int y){
+LinkedList* createSmallLinkedList(int x, int y){
+	LinkedList* newList = new LinkedList;
+	newList->head = NULL;
+	newList->tail = NULL;
 	Node* head = NULL; //empty linked list
 	head = new Node; //first node
 	head->data = x;
 	head->next = new Node;
 	head->next->data = y;
 	head->next->next = NULL;
-	return head;
+	newList->head = head;
+	newList->tail = head->next;
+
+	return newList;
 
 }
 
-Node* insertNode(Node* head, int x){
+void insertNode(LinkedList* list, int x){
 	// Adds a new node with data x at the head of the list
 	// returns the new head of the list
 	Node* p = new Node;
 	p->data = x;
-	p->next = head;
-	return p;
+	p->next = list->head;
+	if(list->head == NULL){
+		list->tail = p;
+	}
+	list->head = p;
 
 }
-void freeList(Node* head){
+void insertLast(LinkedList* list, int x){
+	 Node* p = new Node;
+	 p->data = x;
+	 p->next = NULL;
+	 if(list->head){
+	   list->tail->next = p;
+	 }else{
+	   list->head = p;
+	 }
+	 list->tail =p;
+}
+void freeList(LinkedList* list){
+      // free all the nodes in the linked list
+      Node* p = list->head;
+      while(p){
+	Node* tmp = p;
+	p = p->next;
+	delete tmp;
+      }
+      /* Do this step and stop if you are only clearing the list*/
+      list->head = NULL;
+      list->tail = NULL;
+
+      /* Otherwise */
+      delete list;
 
 }
 
-void printLinkedList(Node* head){
-	Node* p = head; //p is a traversal pointer
+void printLinkedList(LinkedList* list){
+	Node* p = list->head; //p is a traversal pointer
 	while(p){
 		cout<<p->data<<endl;
 		p = p->next;
@@ -54,16 +87,15 @@ void printLinkedList(Node* head){
 }
 
 int main(){
-	LinkedList l1;\
-	Node * head;
-	head = createSmallLinkedListWrongImplementation(10, 20);
+	LinkedList* newlist= createSmallLinkedList(10, 20);
 	cout<<"Initial two node list with values 10, 20:"<<endl;
-	printLinkedList(head); // 10 20
+	printLinkedList(newlist); // 10 20
 	for(int i =0; i <10; i++){
-		head = insertNode(head, i*100);
+		insertNode(newlist, i*100);
 	}
 	cout<<"Linked List after adding 30 to the head"<<endl;
-	printLinkedList(head); // 30 10 20 
+	printLinkedList(newlist); // 30 10 20 
+	freeList(newlist);
 	return 0;
 
 }
