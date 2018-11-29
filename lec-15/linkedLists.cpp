@@ -53,17 +53,6 @@ void insertLast(LinkedList* list, int x){
 	 list->tail =p;
 }
 
-void freeHelper(Node* head){
-	if(!head)
-		return;
-	freeHelper(head->next);
-	delete head;
-
-}
-void freeListRecursive(LinkedList* list){
-	freeHelper(list->head);
-	delete list;
-}
 
 void freeList(LinkedList* list){
       // free all the nodes in the linked list
@@ -127,7 +116,7 @@ int main(){
 	cout<<"Is 100 in the list?  "<< result<<endl;
 	result = search(newlist->head, -100)?"Yes":"No";
 	cout<<"Is -100 in the list?  "<< result<<endl;
-	freeListRecursive(newlist);
+	freeList(newlist);
 	return 0;
 
 }
