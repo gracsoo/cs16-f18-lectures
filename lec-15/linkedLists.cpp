@@ -107,6 +107,7 @@ int minOfList(Node* head){
 }
 
 bool search(Node* head, int value){
+	return true;
 
 }
 
