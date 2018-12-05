@@ -53,6 +53,37 @@ void insertLast(LinkedList* list, int x){
 	 list->tail =p;
 }
 
+Node* deleteValue(Node* head, int value){
+	//delete all the nodes with the given value and return the new
+	//head of the linked list
+	if(!head)
+		return NULL;
+	Node* tmp = deleteValue(head->next, value);
+	if(head->data == value){
+		//code
+		delete head;
+		return tmp;
+	} else{
+		head->next = tmp;
+		return head;
+	}
+
+}
+
+void freeListRecursive(Node* head){
+	if(!head)
+		return;
+	freeListRecursive(head->next);
+	delete head;
+
+}
+
+void freeList_new(LinkedList* list){
+	freeListRecursive(list->head);
+	delete list;
+}
+
+
 
 void freeList(LinkedList* list){
       // free all the nodes in the linked list
@@ -96,7 +127,15 @@ int minOfList(Node* head){
 }
 
 bool search(Node* head, int value){
-	return true;
+	if(!head)
+		return false;
+	if(head->data == value) //base case
+		return true;
+	return search(head->next, value);
+
+	//Is this code correct?
+	// A. Yes
+	// B. No
 
 }
 
@@ -105,18 +144,29 @@ int main(){
 	LinkedList* newlist= createSmallLinkedList(10, 20);
 	cout<<"Initial two node list with values 10, 20:"<<endl;
 	printLinkedList(newlist); // 10 20
-	for(int i =0; i <10; i++){
-		insertNode(newlist, i*100);
-	}
-	cout<<"Linked List after adding 30 to the head"<<endl;
-	printLinkedList(newlist); // 30 10 20 
-	cout<<"Min element is "<<minOfList(newlist->head)<<endl;
+	insertNode(newlist, 10);
+	insertNode(newlist, 5);
+	insertNode(newlist, 10);
+	insertNode(newlist, 15);
+	insertNode(newlist, 100);
+
 	string result;
 	result = search(newlist->head, 100)?"Yes":"No";
 	cout<<"Is 100 in the list?  "<< result<<endl;
 	result = search(newlist->head, -100)?"Yes":"No";
 	cout<<"Is -100 in the list?  "<< result<<endl;
-	freeList(newlist);
+	cout<< "Before delete"<<endl;
+	printLinkedList(newlist);
+
+	deleteValue(newlist->head, 10);
+	cout<< "After delete"<<endl;
+	printLinkedList(newlist);
+
+
+	freeList_new(newlist);
+
+
+
 	return 0;
 
 }
