@@ -11,8 +11,8 @@ using namespace std;
 * Searching: Binary search - recursion
 */
 //Generic function: it works for arrays, vectors
-template <class T>
-void printList(T& a){
+//template <class T>
+void printList(vector<int>& a){
 		// Print all the elements
 	for(auto item : a){
 		cout<<item<<endl;
